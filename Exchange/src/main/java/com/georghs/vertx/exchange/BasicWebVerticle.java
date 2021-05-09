@@ -30,8 +30,13 @@ public class BasicWebVerticle extends AbstractVerticle
 	
     public static void main( String[] args )
     {
+    	DeploymentOptions options = new DeploymentOptions();
+    	
+    	options.getConfig().put("http.port", 8080);
+    	
+    	
     		Vertx vertx = Vertx.vertx();
-    		vertx.deployVerticle(new BasicWebVerticle());
+    		vertx.deployVerticle(new BasicWebVerticle(), options);
     }
     
     @Override
@@ -42,7 +47,7 @@ public class BasicWebVerticle extends AbstractVerticle
     	Router router = Router.router(vertx);
     	
     	// API routing
-    	router.get("/api/v1/products").handler(this::getAllProducts);
+    	router.get("/api/v1/products").handler(this::getAllStocks);
     	
     	
     	
@@ -97,7 +102,7 @@ public class BasicWebVerticle extends AbstractVerticle
 		return output;
 	}
 	
-	private void getAllProducts(RoutingContext routingContext) {
+	private void getAllStocks(RoutingContext routingContext) {
 		
 		JsonObject responseJson = new JsonObject();
 		
