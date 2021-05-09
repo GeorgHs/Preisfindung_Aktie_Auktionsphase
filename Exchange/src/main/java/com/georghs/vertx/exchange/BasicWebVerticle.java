@@ -2,7 +2,11 @@ package com.georghs.vertx.exchange;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import com.georghs.vertx.exchange.stock.Stock;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
@@ -99,19 +103,30 @@ public class BasicWebVerticle extends AbstractVerticle
 		
 		JsonArray items = new JsonArray();
 		
-		JsonObject firstItem = new JsonObject();
-		firstItem.put("number", "123");
-		firstItem.put("description", "My item 123");
+//		JsonObject firstItem = new JsonObject();
+//		firstItem.put("number", "123");
+//		firstItem.put("description", "My item 123");
+//		
+//		items.add(firstItem);
+//		
+//		JsonObject secondItem = new JsonObject();
+//		secondItem.put("number", "321");
+//		secondItem.put("description", "My item 321");
+//		
+//		items.add(secondItem);
+//		
+//		responseJson.put("products", items);
 		
-		items.add(firstItem);
 		
-		JsonObject secondItem = new JsonObject();
-		secondItem.put("number", "321");
-		secondItem.put("description", "My item 321");
+		Stock firstItem = new Stock(23.2,"stock1");
+		Stock secondItem = new Stock(23.2,"stock2");
 		
-		items.add(secondItem);
+		List<Stock> stocks = new ArrayList<Stock>();
 		
-		responseJson.put("products", items);
+		stocks.add(firstItem);
+		stocks.add(secondItem);
+		
+		responseJson.put("products", stocks);
 		
 //		routingContext.response()
 //		.setStatusCode(200)
