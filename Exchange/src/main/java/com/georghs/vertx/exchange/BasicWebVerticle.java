@@ -32,11 +32,12 @@ public class BasicWebVerticle extends AbstractVerticle
     {
     	DeploymentOptions options = new DeploymentOptions();
     	
+    	
+    	options.setConfig(new JsonObject().put("http.port", 8080));
     	options.getConfig().put("http.port", 8080);
     	
-    	
-    		Vertx vertx = Vertx.vertx();
-    		vertx.deployVerticle(new BasicWebVerticle(), options);
+		Vertx vertx = Vertx.vertx();
+		vertx.deployVerticle(new BasicWebVerticle(), options);
     }
     
     @Override
@@ -86,7 +87,9 @@ public class BasicWebVerticle extends AbstractVerticle
     	
     	router.route().handler(StaticHandler.create().setCachingEnabled(false));
     	
-    	vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+    	
+    	
+    	vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port"));
     	
     }
 
