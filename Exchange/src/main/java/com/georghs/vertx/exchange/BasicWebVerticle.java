@@ -113,10 +113,14 @@ public class BasicWebVerticle extends AbstractVerticle
 		
 		responseJson.put("products", items);
 		
+//		routingContext.response()
+//		.setStatusCode(200)
+//		.putHeader("content-type", "application/json")
+//		.end(Json.encode(responseJson));
+		
 		routingContext.response()
-		.setStatusCode(200)
-		.putHeader("content-type", "application/json")
-		.end(Json.encode(responseJson));
+		.setStatusCode(400)
+		.end();
 		
 	}
 
