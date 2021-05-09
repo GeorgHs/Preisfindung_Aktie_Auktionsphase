@@ -120,7 +120,8 @@ public class BasicWebVerticle extends AbstractVerticle
 		
 		routingContext.response()
 		.setStatusCode(400)
-		.end();
+		.putHeader("content-type", "application/json")
+		.end(Json.encodePrettily(new JsonObject().put("error", "Could not find all products")));
 		
 	}
 
