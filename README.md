@@ -1,0 +1,1 @@
+# Preisfindung_Aktie_Auktionsphase
