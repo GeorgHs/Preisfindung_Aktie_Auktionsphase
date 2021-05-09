@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import com.georghs.vertx.exchange.stock.Stock;
 
+import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -30,14 +31,28 @@ public class BasicWebVerticle extends AbstractVerticle
 	
     public static void main( String[] args )
     {
-    	DeploymentOptions options = new DeploymentOptions();
+//    	DeploymentOptions options = new DeploymentOptions();
     	
+    	Vertx vertx = Vertx.vertx();
     	
-    	options.setConfig(new JsonObject().put("http.port", 8080));
-    	options.getConfig().put("http.port", 8080);
+//    	options.setConfig(new JsonObject().put("http.port", 8080));
+//    	options.getConfig().put("http.port", 8080);
     	
-		Vertx vertx = Vertx.vertx();
-		vertx.deployVerticle(new BasicWebVerticle(), options);
+    	ConfigRetriever configRetriever = ConfigRetriever.create(vertx);
+    	
+    	configRetriever.getConfig(config -> {
+    		if (config.succeeded()) {
+    			JsonObject configJson = config.result();
+    			System.out.println(configJson.encodePrettily());
+    			
+    			DeploymentOptions options = new DeploymentOptions().setConfig(configJson);
+    			
+    			vertx.deployVerticle(new BasicWebVerticle(), options);
+    			
+
+    		}
+    	});
+    	
     }
     
     @Override
