@@ -8,6 +8,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -96,8 +97,21 @@ public class BasicWebVerticle extends AbstractVerticle
 		
 		JsonObject responseJson = new JsonObject();
 		
-		responseJson.put("itemNumber", "123");
-		responseJson.put("description", "My item 123");
+		JsonArray items = new JsonArray();
+		
+		JsonObject firstItem = new JsonObject();
+		firstItem.put("number", "123");
+		firstItem.put("description", "My item 123");
+		
+		items.add(firstItem);
+		
+		JsonObject secondItem = new JsonObject();
+		secondItem.put("number", "321");
+		secondItem.put("description", "My item 321");
+		
+		items.add(secondItem);
+		
+		responseJson.put("products", items);
 		
 		routingContext.response()
 		.setStatusCode(200)
