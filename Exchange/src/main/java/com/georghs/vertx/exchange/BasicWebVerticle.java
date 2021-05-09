@@ -7,10 +7,12 @@ import java.util.Scanner;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 
 /**
@@ -33,6 +35,11 @@ public class BasicWebVerticle extends AbstractVerticle
     	
     	
     	Router router = Router.router(vertx);
+    	
+    	// API routing
+    	router.get("/api/v1/products").handler(this::getAllProducts);
+    	
+    	
     	
     	router.get("/yo.html").handler(routingContext -> {
     		
@@ -83,6 +90,20 @@ public class BasicWebVerticle extends AbstractVerticle
 		}
 		
 		return output;
+	}
+	
+	private void getAllProducts(RoutingContext routingContext) {
+		
+		JsonObject responseJson = new JsonObject();
+		
+		responseJson.put("itemNumber", "123");
+		responseJson.put("description", "My item 123");
+		
+		routingContext.response()
+		.setStatusCode(200)
+		.putHeader("content-type", "application/json")
+		.end(Json.encode(responseJson));
+		
 	}
 
 	@Override
