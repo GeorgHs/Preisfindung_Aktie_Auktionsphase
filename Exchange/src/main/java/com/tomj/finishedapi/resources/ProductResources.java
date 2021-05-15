@@ -3,7 +3,7 @@ package com.tomj.finishedapi.resources;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tomj.finishedapi.entity.Product;
+import com.tomj.finishedapi.entity.Stock;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpHeaders;
@@ -139,7 +139,7 @@ public class ProductResources {
 		String number = jsonBody.getString("number");
 		String description = jsonBody.getString("description");
 		
-		Product newItem = new Product("", number, description);
+		Stock newItem = new Stock("", number, description);
 		
 		// Add into database and get unique id
 		newItem.setId("556677");
@@ -163,7 +163,7 @@ public class ProductResources {
 		String number = jsonBody.getString("number");
 		String description = jsonBody.getString("description");
 		
-		Product updatedItem = new Product(productId, number, description);
+		Stock updatedItem = new Stock(productId, number, description);
 
 		routingContext.response()
 		.setStatusCode(200)
