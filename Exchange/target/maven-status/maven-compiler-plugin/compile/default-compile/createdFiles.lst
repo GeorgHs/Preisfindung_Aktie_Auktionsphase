@@ -1,0 +1,5 @@
+com\tomj\finishedapi\entity\Product.class
+com\tomj\finishedapi\FinishedAPIVerticle.class
+com\tomj\finishedapi\resources\ProductResources.class
+com\tomj\finishedapi\database\MongoManager.class
+com\tomj\finishedapi\MongoDBVerticle.class

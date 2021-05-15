@@ -6,8 +6,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/resources/conf"/>
-	<classpathentry kind="src" path="src/main/resources/webroot"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/resources/conf"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/resources/webroot"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
