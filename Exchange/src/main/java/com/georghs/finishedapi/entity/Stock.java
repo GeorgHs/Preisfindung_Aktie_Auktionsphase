@@ -1,4 +1,4 @@
-package com.tomj.finishedapi.entity;
+package com.georghs.finishedapi.entity;
 
 import java.time.LocalDateTime;
 
@@ -6,8 +6,8 @@ public class Stock {
 
 	private String id;
 	private Double currentPrice;
-	private LocalDateTime timeOfPriceSet;
-	public Stock(String id, Double currentPrice, LocalDateTime timeOfPriceSet) {
+	private String timeOfPriceSet;
+	public Stock(String id, Double currentPrice, String timeOfPriceSet) {
 		super();
 		this.id = id;
 		this.currentPrice = currentPrice;
@@ -25,10 +25,10 @@ public class Stock {
 	public void setCurrentPrice(Double currentPrice) {
 		this.currentPrice = currentPrice;
 	}
-	public LocalDateTime getTimeOfPriceSet() {
+	public String getTimeOfPriceSet() {
 		return timeOfPriceSet;
 	}
-	public void setTimeOfPriceSet(LocalDateTime timeOfPriceSet) {
+	public void setTimeOfPriceSet(String timeOfPriceSet) {
 		this.timeOfPriceSet = timeOfPriceSet;
 	}
 	

@@ -1,10 +1,10 @@
-package com.tomj.finishedapi;
+package com.georghs.finishedapi;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.tomj.finishedapi.resources.ProductResources;
+import com.georghs.finishedapi.resources.StockResources;
 
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
@@ -24,9 +24,9 @@ import io.vertx.ext.web.handler.StaticHandler;
  * Hello world!
  *
  */
-public class FinishedAPIVerticle extends AbstractVerticle {
+public class StockPriceAPIVerticle extends AbstractVerticle {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(FinishedAPIVerticle.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StockPriceAPIVerticle.class);
 
 	public static void main(String[] args) {
 
@@ -54,7 +54,7 @@ public class FinishedAPIVerticle extends AbstractVerticle {
 
 						DeploymentOptions options = new DeploymentOptions().setConfig(configJson);
 
-						vertx.deployVerticle(new FinishedAPIVerticle(), options);
+						vertx.deployVerticle(new StockPriceAPIVerticle(), options);
 					}
 
 				});
@@ -74,7 +74,7 @@ public class FinishedAPIVerticle extends AbstractVerticle {
 		router.route().handler(CookieHandler.create());
 
 		// Create ProductResource object
-		ProductResources productResources = new ProductResources();
+		StockResources productResources = new StockResources();
 
 		// Map subrouter for Products
 		router.mountSubRouter("/api/", productResources.getAPISubRouter(vertx));

@@ -1,4 +1,4 @@
-package com.tomj.finishedapi.database;
+package com.georghs.finishedapi.database;
 
 import java.util.List;
 
@@ -31,27 +31,27 @@ public class MongoManager {
 			JsonObject inputJson = new JsonObject(message.body().toString());
 
 			if (inputJson.getString("cmd").equals("findAll")) {
-				getAllProducts(message);
+				getAllStocks(message);
 			}
 
 			if (inputJson.getString("cmd").equals("findById")) {
 				
-				LOGGER.info("productId: " + inputJson.getString("productId"));
+				LOGGER.info("stockId: " + inputJson.getString("stockId"));
 				
-				getProductById(message, inputJson.getString("productId"));
+				getStockById(message, inputJson.getString("stockId"));
 			}
 
 		});
 
 	}
 
-	private void getAllProducts(Message<Object> message) {
+	private void getAllStocks(Message<Object> message) {
 
 		FindOptions findOptions = new FindOptions();
 
 		// findOptions.setLimit(1);
 
-		mongoClient.findWithOptions("products", new JsonObject(), findOptions, results -> {
+		mongoClient.findWithOptions("stocks", new JsonObject(), findOptions, results -> {
 
 			try {
 				List<JsonObject> objects = results.result();
@@ -62,7 +62,7 @@ public class MongoManager {
 
 					JsonObject jsonResponse = new JsonObject();
 
-					jsonResponse.put("products", objects);
+					jsonResponse.put("stocks", objects);
 
 					message.reply(jsonResponse.toString());
 
@@ -76,7 +76,7 @@ public class MongoManager {
 				}
 
 			} catch (Exception e) {
-				LOGGER.info("getAllProducts Failed exception e=", e.getLocalizedMessage());
+				LOGGER.info("getAllStocks Failed exception e=", e.getLocalizedMessage());
 
 				JsonObject jsonResponse = new JsonObject();
 
@@ -89,16 +89,16 @@ public class MongoManager {
 
 	}
 	
-	private void getProductById(Message<Object> message, String productId) {
+	private void getStockById(Message<Object> message, String productId) {
 
 		FindOptions findOptions = new FindOptions();
 
 		//findOptions.setLimit(1);
 
 		System.out.println("findOptions " + findOptions);
-		System.out.println("productId "+ productId);
+		System.out.println("stockId "+ productId);
 		
-		mongoClient.findWithOptions("products", new JsonObject().put("_id", productId), findOptions, results -> {
+		mongoClient.findWithOptions("stocks", new JsonObject().put("_id", productId), findOptions, results -> {
 
 			System.out.println("results "+ results);
 
@@ -123,7 +123,7 @@ public class MongoManager {
 				}
 
 			} catch (Exception e) {
-				LOGGER.info("getAllProducts Failed exception e=", e.getLocalizedMessage());
+				LOGGER.info("getAllStocks Failed exception e=", e.getLocalizedMessage());
 
 				JsonObject jsonResponse = new JsonObject();
 

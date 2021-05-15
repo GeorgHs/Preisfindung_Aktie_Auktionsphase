@@ -1,9 +1,9 @@
-package com.tomj.finishedapi.resources;
+package com.georghs.finishedapi.resources;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tomj.finishedapi.entity.Stock;
+import com.georghs.finishedapi.entity.Stock;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpHeaders;
@@ -16,9 +16,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
 
-public class ProductResources {
+public class StockResources {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductResources.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StockResources.class);
 
 	private Vertx vertx = null;
 	
@@ -32,12 +32,19 @@ public class ProductResources {
 		// API routing
 		apiSubRouter.route("/*").handler(this::defaultProcessorForAllAPI);
 		
-		apiSubRouter.route("/v1/products*").handler(BodyHandler.create());
-		apiSubRouter.get("/v1/products").handler(this::getAllProducts);
-		apiSubRouter.get("/v1/products/:id").handler(this::getProductById);
-		apiSubRouter.post("/v1/products").handler(this::addProduct);
-		apiSubRouter.put("/v1/products/:id").handler(this::updateProductById);
-		apiSubRouter.delete("/v1/products/:id").handler(this::deleteProductById);
+//		apiSubRouter.route("/v1/products*").handler(BodyHandler.create());
+//		apiSubRouter.get("/v1/products").handler(this::getAllProducts);
+//		apiSubRouter.get("/v1/products/:id").handler(this::getProductById);
+//		apiSubRouter.post("/v1/products").handler(this::addStock);
+//		apiSubRouter.put("/v1/products/:id").handler(this::updateStockById);
+//		apiSubRouter.delete("/v1/products/:id").handler(this::deleteStockById);
+		
+		apiSubRouter.route("/v1/stocks*").handler(BodyHandler.create());
+		apiSubRouter.get("/v1/stocks").handler(this::getAllStocks);
+		apiSubRouter.get("/v1/stocks/:id").handler(this::getStocksById);
+		apiSubRouter.post("/v1/stocks").handler(this::addStock);
+		apiSubRouter.put("/v1/stocks/:id").handler(this::updateStockById);
+		apiSubRouter.delete("/v1/stocks/:id").handler(this::deleteStockById);
 		
 		return apiSubRouter;
 	}
@@ -67,7 +74,7 @@ public class ProductResources {
 	}
 	
 	// Get all products as array of products
-	public void getAllProducts(RoutingContext routingContext) {
+	public void getAllStocks(RoutingContext routingContext) {
 		
 	    JsonObject cmdJson = new JsonObject();
 	    
@@ -97,14 +104,14 @@ public class ProductResources {
 	}
 	
 	// Get one products that matches the input id and return as single json object
-	public void getProductById(RoutingContext routingContext) {
+	public void getStocksById(RoutingContext routingContext) {
 		
-		final String productId = routingContext.request().getParam("id");
+		final String stockId = routingContext.request().getParam("id");
 		
 	    JsonObject cmdJson = new JsonObject();
 	    
 	    cmdJson.put("cmd", "findById");
-	    cmdJson.put("productId", productId);
+	    cmdJson.put("stockId", stockId);
 
 		vertx.eventBus().send("com.tomj.mongoservice", cmdJson.toString(), reply -> {
 			
@@ -130,16 +137,16 @@ public class ProductResources {
 	}
 	
 	// Insert one item passed in from the http post body return what was added with unique id from the insert
-	public void addProduct(RoutingContext routingContext) {
+	public void addStock(RoutingContext routingContext) {
 		
 		JsonObject jsonBody = routingContext.getBodyAsJson();
 		
 		System.out.println(jsonBody);
 		
-		String number = jsonBody.getString("number");
-		String description = jsonBody.getString("description");
+		Double number = jsonBody.getDouble("currentPrice");
+		String timeOfPriceSet = jsonBody.getString("timeOfPriceSet");
 		
-		Stock newItem = new Stock("", number, description);
+		Stock newItem = new Stock("", number, timeOfPriceSet);
 		
 		// Add into database and get unique id
 		newItem.setId("556677");
@@ -153,17 +160,17 @@ public class ProductResources {
 	}
 	
 	// Update the item based on the url product id and return update product info
-	public void updateProductById(RoutingContext routingContext) {
+	public void updateStockById(RoutingContext routingContext) {
 		
 		final String productId = routingContext.request().getParam("id");
 		
 		JsonObject jsonBody = routingContext.getBodyAsJson();
 
 
-		String number = jsonBody.getString("number");
-		String description = jsonBody.getString("description");
+		Double number = jsonBody.getDouble("currentPrice");
+		String timeOfPriceSet = jsonBody.getString("timeOfPriceSet");
 		
-		Stock updatedItem = new Stock(productId, number, description);
+		Stock updatedItem = new Stock(productId, number, timeOfPriceSet);
 
 		routingContext.response()
 		.setStatusCode(200)
@@ -174,7 +181,7 @@ public class ProductResources {
 	}
 	
 	// Delete item and return 200 on success or 400 on fail
-	public void deleteProductById(RoutingContext routingContext) {
+	public void deleteStockById(RoutingContext routingContext) {
 		
 		final String productId = routingContext.request().getParam("id");
 

@@ -1,4 +1,4 @@
-package com.tomj.finishedapi;
+package com.georghs.finishedapi;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

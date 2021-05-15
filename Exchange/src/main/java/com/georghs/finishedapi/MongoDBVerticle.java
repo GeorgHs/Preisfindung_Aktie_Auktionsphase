@@ -1,8 +1,8 @@
-package com.tomj.finishedapi;
+package com.georghs.finishedapi;
 
 
 
-import com.tomj.finishedapi.database.MongoManager;
+import com.georghs.finishedapi.database.MongoManager;
 
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
